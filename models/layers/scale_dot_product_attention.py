@@ -1,40 +1,26 @@
-"""
-@author : Hyunwoong
-@when : 2019-10-22
-@homepage : https://github.com/gusdnd852
-"""
 import math
 
 from torch import nn
 
-
+# Scaled Dot Product Attention 클래스 구현
 class ScaleDotProductAttention(nn.Module):
-    """
-    compute scale dot product attention
-
-    Query : given sentence that we focused on (decoder)
-    Key : every sentence to check relationship with Query(encoder)
-    Value : every sentence same with Key (encoder)
-    """
 
     def __init__(self):
         super(ScaleDotProductAttention, self).__init__()
-        self.softmax = nn.Softmax(dim=-1)
+        self.softmax = nn.Softmax(dim=-1)       # nn.Softmax는 소프트맥스 함수를 적용하는 레이어입니다. dim=-1로 설정하여 마지막 차원에 대해 소프트맥스 함수를 적용하도록 합니다.
 
-    def forward(self, q, k, v, mask=None, e=1e-12):
-        # input is 4 dimension tensor
-        # [batch_size, head, length, d_tensor]
+    def forward(self, q, k, v, mask=None, e=1e-12):     # forward 메서드는 ScaleDotProductAttention 클래스의 인스턴스가 호출될 때 실행되는 메서드입니다.
         batch_size, head, length, d_tensor = k.size()
 
-        # 1. dot product Query with Key^T to compute similarity
-        k_t = k.transpose(2, 3)  # transpose
-        score = (q @ k_t) / math.sqrt(d_tensor)  # scaled dot product
+        # 1. calculate score
+        k_t = k.transpose(2, 3)                         
+        score = (q @ k_t) / math.sqrt(d_tensor)         
 
         # 2. apply masking (opt)
         if mask is not None:
             score = score.masked_fill(mask == 0, -10000)
 
-        # 3. pass them softmax to make [0, 1] range
+        # 3. softmax
         score = self.softmax(score)
 
         # 4. multiply with Value

@@ -1,22 +1,8 @@
-"""
-@author : Hyunwoong
-@when : 2019-10-24
-@homepage : https://github.com/gusdnd852
-"""
 from torch import nn
 
+# 토큰 임베딩 클래스 정의
+class TokenEmbedding(nn.Embedding):                                                 # nn.Embedding 클래스를 상속받아 TokenEmbedding 클래스 정의
 
-class TokenEmbedding(nn.Embedding):
-    """
-    Token Embedding using torch.nn
-    they will dense representation of word using weighted matrix
-    """
-
-    def __init__(self, vocab_size, d_model):
-        """
-        class for token embedding that included positional information
-
-        :param vocab_size: size of vocabulary
-        :param d_model: dimensions of model
-        """
-        super(TokenEmbedding, self).__init__(vocab_size, d_model, padding_idx=1)
+    def __init__(self, vocab_size, d_model):                                        # vocab_size와 d_model을 입력으로 받는 초기화 메서드 정의
+        super(TokenEmbedding, self).__init__(vocab_size, d_model, padding_idx=1)    # nn.Embedding 클래스의 초기화 메서드를 호출하여 vocab_size, d_model, padding_idx를 설정
+                                                    
