@@ -1,13 +1,7 @@
-"""
-@author : Hyunwoong
-@when : 2019-12-18
-@homepage : https://github.com/gusdnd852
-"""
-
 import matplotlib.pyplot as plt
 import re
 
-
+# 그래프를 그리기 위한 함수 정의
 def read(name):
     f = open(name, 'r')
     file = f.read()
@@ -17,7 +11,7 @@ def read(name):
 
     return [float(i) for idx, i in enumerate(file.split(','))]
 
-
+# 그래프를 그리는 함수 정의
 def draw(mode):
     if mode == 'loss':
         train = read('./result/train_loss.txt')
